@@ -25,9 +25,10 @@ class FicoController extends Controller
 
                 if ($bvn != ''){
                     $score[] = \DB::connection('oracle')->select("select * from fico_score where MERGED_RUID = '$bvn'");
+                    \DB::table('users')->where('email', $request->email)->increment('hits');
                     $fico = new Fico;
                     $fico->email = $request->email;
-                    $fico->fico_id = $request->email;
+                    $fico->fico_id = $bvn;
                     $fico->save();
                 }
                 elseif ($phone!=''){

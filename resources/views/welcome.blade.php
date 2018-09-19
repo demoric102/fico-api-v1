@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="#">PHP Documentation</a>
+                    <a href="{{ asset('documentation/fico-api-documentation.docx') }}" download>PHP Documentation</a>
                     <a href="#">Java Documentation</a>
                     <a href="#">C# Documentation</a>
                 </div>

@@ -28,10 +28,10 @@
                 <table class="table table-borderless mb-0" v-if="users.length > 0">
                     <thead>
                         <tr>
-                            <th>Client ID</th>
+                            <th>Email</th>
                             <th>Name</th>
-                            <th>Secret</th>
-                            <th></th>
+                            <th>Date / Time</th>
+                            <th>Hits</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -40,7 +40,7 @@
                         <tr v-for="user in users">
                             <!-- ID -->
                             <td style="vertical-align: middle;">
-                                {{ user.id }}
+                                {{ user.email }}
                             </td>
 
                             <!-- Name -->
@@ -50,20 +50,16 @@
 
                             <!-- Secret -->
                             <td style="vertical-align: middle;">
-                                <code>{{ user.secret }}</code>
+                                <code>{{ user.created_at }}</code>
                             </td>
-
+                            <!-- Delete Button -->
+                            <td style="vertical-align: middle;">
+                                {{ user.hits }}
+                            </td>
                             <!-- Edit Button -->
                             <td style="vertical-align: middle;">
                                 <a class="action-link" tabindex="-1" @click="edit(user)">
                                     Edit
-                                </a>
-                            </td>
-
-                            <!-- Delete Button -->
-                            <td style="vertical-align: middle;">
-                                <a class="action-link text-danger" @click="destroy(user)">
-                                    Delete
                                 </a>
                             </td>
                         </tr>
@@ -185,8 +181,8 @@
                                 <label class="col-md-3 col-form-label">Email</label>
 
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" name="redirect"
-                                                    @keyup.enter="update" v-model="editForm.redirect">
+                                    <input type="text" class="form-control" name="email"
+                                                    @keyup.enter="update" v-model="editForm.email">
 
                                     <span class="form-text text-muted">
                                         Email Address
@@ -194,19 +190,6 @@
                                 </div>
                             </div>
 
-                            <!-- Redirect URL -->
-                            <div class="form-group row">
-                                <label class="col-md-3 col-form-label">Password</label>
-
-                                <div class="col-md-9">
-                                    <input type="password" class="form-control" name="redirect"
-                                                    @keyup.enter="update" v-model="editForm.redirect">
-
-                                    <span class="form-text text-muted">
-                                       Password
-                                    </span>
-                                </div>
-                            </div>
                         </form>
                     </div>
 
@@ -232,17 +215,18 @@
         data() {
             return {
                 users: [],
+                hits: [],
 
                 createForm: {
                     errors: [],
                     name: '',
-                    redirect: ''
+                    email: ''
                 },
 
                 editForm: {
                     errors: [],
                     name: '',
-                    redirect: ''
+                    email: ''
                 }
             };
         },
@@ -287,6 +271,13 @@
                         });
             },
 
+            getHits() {
+                axios.get('/administrator/hits')
+                        .then(response => {
+                            this.hits = response.data;
+                        });
+            },
+
             /**
              * Show the form for creating new clients.
              */
@@ -307,10 +298,10 @@
             /**
              * Edit the given client.
              */
-            edit(client) {
-                this.editForm.id = client.id;
-                this.editForm.name = client.name;
-                this.editForm.redirect = client.redirect;
+            edit(user) {
+                this.editForm.id = user.id;
+                this.editForm.name = user.name;
+                this.editForm.email = user.email;
 
                 $('#modal-edit-client').modal('show');
             },

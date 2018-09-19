@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('type')->default('default');
             $table->string('activate')->default('inactive');
+            $table->integer('hits');
             $table->rememberToken();
             $table->timestamps();
         });

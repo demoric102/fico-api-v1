@@ -6,12 +6,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/download-doc', function () {
+    $file= public_path(). "/documentation/fico-api-documentation.doc ";
+
+    $headers = [
+        'Content-Type' => 'application/doc',
+     ];
+
+    return response()->download($file, 'fico-api-documentation.doc ', $headers);   
+
+})->name('download-doc');
+
 Route::get('/administrator/users', function () {
-    return User::where('type', '=','default')->get();
+    return \App\User::where('type', '=','default')->get();
 });
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');;
 
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
 Route::get('/token', 'API\FicoController@token')->name('token');
 

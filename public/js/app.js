@@ -47944,23 +47944,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     /*
@@ -47969,17 +47952,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     data: function data() {
         return {
             users: [],
+            hits: [],
 
             createForm: {
                 errors: [],
                 name: '',
-                redirect: ''
+                email: ''
             },
 
             editForm: {
                 errors: [],
                 name: '',
-                redirect: ''
+                email: ''
             }
         };
     },
@@ -48028,6 +48012,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 _this.users = response.data;
             });
         },
+        getHits: function getHits() {
+            var _this2 = this;
+
+            axios.get('/administrator/hits').then(function (response) {
+                _this2.hits = response.data;
+            });
+        },
 
 
         /**
@@ -48049,10 +48040,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         /**
          * Edit the given client.
          */
-        edit: function edit(client) {
-            this.editForm.id = client.id;
-            this.editForm.name = client.name;
-            this.editForm.redirect = client.redirect;
+        edit: function edit(user) {
+            this.editForm.id = user.id;
+            this.editForm.name = user.name;
+            this.editForm.email = user.email;
 
             $('#modal-edit-client').modal('show');
         },
@@ -48070,12 +48061,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * Persist the client to storage using the given form.
          */
         persistClient: function persistClient(method, uri, form, modal) {
-            var _this2 = this;
+            var _this3 = this;
 
             form.errors = [];
 
             axios[method](uri, form).then(function (response) {
-                _this2.getClients();
+                _this3.getClients();
 
                 form.name = '';
                 form.redirect = '';
@@ -48096,10 +48087,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * Destroy the given client.
          */
         destroy: function destroy(client) {
-            var _this3 = this;
+            var _this4 = this;
 
             axios.delete('/oauth/clients/' + client.id).then(function (response) {
-                _this3.getClients();
+                _this4.getClients();
             });
         }
     }
@@ -48167,7 +48158,7 @@ var render = function() {
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
                       _vm._v(
                         "\n                            " +
-                          _vm._s(user.id) +
+                          _vm._s(user.email) +
                           "\n                        "
                       )
                     ]),
@@ -48181,7 +48172,15 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
-                      _c("code", [_vm._v(_vm._s(user.secret))])
+                      _c("code", [_vm._v(_vm._s(user.created_at))])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { "vertical-align": "middle" } }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(user.hits) +
+                          "\n                        "
+                      )
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
@@ -48199,25 +48198,6 @@ var render = function() {
                         [
                           _vm._v(
                             "\n                                Edit\n                            "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticStyle: { "vertical-align": "middle" } }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "action-link text-danger",
-                          on: {
-                            click: function($event) {
-                              _vm.destroy(user)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Delete\n                            "
                           )
                         ]
                       )
@@ -48497,13 +48477,13 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.editForm.redirect,
-                          expression: "editForm.redirect"
+                          value: _vm.editForm.email,
+                          expression: "editForm.email"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", name: "redirect" },
-                      domProps: { value: _vm.editForm.redirect },
+                      attrs: { type: "text", name: "email" },
+                      domProps: { value: _vm.editForm.email },
                       on: {
                         keyup: function($event) {
                           if (
@@ -48524,11 +48504,7 @@ var render = function() {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(
-                            _vm.editForm,
-                            "redirect",
-                            $event.target.value
-                          )
+                          _vm.$set(_vm.editForm, "email", $event.target.value)
                         }
                       }
                     }),
@@ -48536,61 +48512,6 @@ var render = function() {
                     _c("span", { staticClass: "form-text text-muted" }, [
                       _vm._v(
                         "\n                                    Email Address\n                                "
-                      )
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
-                    _vm._v("Password")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-9" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.editForm.redirect,
-                          expression: "editForm.redirect"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "password", name: "redirect" },
-                      domProps: { value: _vm.editForm.redirect },
-                      on: {
-                        keyup: function($event) {
-                          if (
-                            !("button" in $event) &&
-                            _vm._k(
-                              $event.keyCode,
-                              "enter",
-                              13,
-                              $event.key,
-                              "Enter"
-                            )
-                          ) {
-                            return null
-                          }
-                          return _vm.update($event)
-                        },
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.editForm,
-                            "redirect",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }, [
-                      _vm._v(
-                        "\n                                   Password\n                                "
                       )
                     ])
                   ])
@@ -48635,13 +48556,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Client ID")]),
+        _c("th", [_vm._v("Email")]),
         _vm._v(" "),
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Secret")]),
+        _c("th", [_vm._v("Date / Time")]),
         _vm._v(" "),
-        _c("th"),
+        _c("th", [_vm._v("Hits")]),
         _vm._v(" "),
         _c("th")
       ])
