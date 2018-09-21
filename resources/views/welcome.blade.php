@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>CRC</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -14,7 +14,7 @@
         <style>
             html, body {
                 background-color: #fff;
-                color: #636b6f;
+                color: #0B0B61;
                 font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
@@ -46,11 +46,11 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 100px;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #0B0B61;
                 padding: 0 25px;
                 font-size: 12px;
                 font-weight: 600;
@@ -78,8 +78,9 @@
             @endif
 
             <div class="content">
+                <img src="{{ asset('/images/crc_logo_home_page.jpg') }}" alt="CRC Credit Bureau">
                 <div class="title m-b-md">
-                    CRC Credit Bureau - FICO API
+                    FICO - API
                 </div>
 
                 <div class="links">

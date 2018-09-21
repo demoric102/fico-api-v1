@@ -25,5 +25,12 @@ class HomeController extends Controller
     {
         return view('home');
     }
-    
+    public function update(Request $request)
+    {
+        $user = \App\User::where('id', '=', $request->id)->firstOrFail();
+        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->activate = $request->activate;
+        $user->save();
+    }
 }

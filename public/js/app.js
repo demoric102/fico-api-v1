@@ -14322,7 +14322,7 @@ window.Vue = __webpack_require__(39);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', __webpack_require__(42));
+Vue.component('admin-component', __webpack_require__(42));
 
 Vue.component('passport-clients', __webpack_require__(48));
 
@@ -47944,6 +47944,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     /*
@@ -47963,7 +47982,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             editForm: {
                 errors: [],
                 name: '',
-                email: ''
+                email: '',
+                activate: ''
             }
         };
     },
@@ -48012,13 +48032,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 _this.users = response.data;
             });
         },
-        getHits: function getHits() {
-            var _this2 = this;
-
-            axios.get('/administrator/hits').then(function (response) {
-                _this2.hits = response.data;
-            });
-        },
 
 
         /**
@@ -48044,6 +48057,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             this.editForm.id = user.id;
             this.editForm.name = user.name;
             this.editForm.email = user.email;
+            this.editForm.activate = user.activate;
 
             $('#modal-edit-client').modal('show');
         },
@@ -48053,7 +48067,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * Update the client being edited.
          */
         update: function update() {
-            this.persistClient('put', '/oauth/clients/' + this.editForm.id, this.editForm, '#modal-edit-client');
+            this.persistClient('put', '/administrator/users/update/' + this.editForm.id, this.editForm, '#modal-edit-client');
         },
 
 
@@ -48061,15 +48075,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * Persist the client to storage using the given form.
          */
         persistClient: function persistClient(method, uri, form, modal) {
-            var _this3 = this;
+            var _this2 = this;
 
             form.errors = [];
 
             axios[method](uri, form).then(function (response) {
-                _this3.getClients();
+                _this2.getClients();
 
                 form.name = '';
-                form.redirect = '';
+                form.email = '';
+                form.activate = '';
                 form.errors = [];
 
                 $(modal).modal('hide');
@@ -48087,10 +48102,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * Destroy the given client.
          */
         destroy: function destroy(client) {
-            var _this4 = this;
+            var _this3 = this;
 
             axios.delete('/oauth/clients/' + client.id).then(function (response) {
-                _this4.getClients();
+                _this3.getClients();
             });
         }
     }
@@ -48184,10 +48199,18 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(user.activate) +
+                          "\n                        "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticStyle: { "vertical-align": "middle" } }, [
                       _c(
                         "a",
                         {
-                          staticClass: "action-link",
+                          staticClass: "btn btn-info",
                           attrs: { tabindex: "-1" },
                           on: {
                             click: function($event) {
@@ -48197,7 +48220,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                                Edit\n                            "
+                            "\n                                Modify\n                            "
                           )
                         ]
                       )
@@ -48515,6 +48538,79 @@ var render = function() {
                       )
                     ])
                   ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("label", { staticClass: "col-md-3 col-form-label" }, [
+                    _vm._v("Activation")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-9" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editForm.activate,
+                            expression: "editForm.activate"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "activate" },
+                        on: {
+                          keyup: function($event) {
+                            if (
+                              !("button" in $event) &&
+                              _vm._k(
+                                $event.keyCode,
+                                "enter",
+                                13,
+                                $event.key,
+                                "Enter"
+                              )
+                            ) {
+                              return null
+                            }
+                            return _vm.update($event)
+                          },
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.editForm,
+                              "activate",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "active" } }, [
+                          _vm._v("Activate")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "inactive" } }, [
+                          _vm._v("Deactivate")
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "form-text text-muted" }, [
+                      _vm._v(
+                        "\n                                    Activate / Deactivate\n                                "
+                      )
+                    ])
+                  ])
                 ])
               ])
             ]),
@@ -48564,7 +48660,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Hits")]),
         _vm._v(" "),
-        _c("th")
+        _c("th", [_vm._v("Status")])
       ])
     ])
   },

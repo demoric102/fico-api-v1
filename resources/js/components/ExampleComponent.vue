@@ -32,7 +32,7 @@
                             <th>Name</th>
                             <th>Date / Time</th>
                             <th>Hits</th>
-                            <th></th>
+                            <th>Status</th>
                         </tr>
                     </thead>
 
@@ -56,10 +56,14 @@
                             <td style="vertical-align: middle;">
                                 {{ user.hits }}
                             </td>
+                            <!-- Delete Button -->
+                            <td style="vertical-align: middle;">
+                                {{ user.activate }}
+                            </td>
                             <!-- Edit Button -->
                             <td style="vertical-align: middle;">
-                                <a class="action-link" tabindex="-1" @click="edit(user)">
-                                    Edit
+                                <a class="btn btn-info" tabindex="-1" @click="edit(user)">
+                                    Modify
                                 </a>
                             </td>
                         </tr>
@@ -190,6 +194,21 @@
                                 </div>
                             </div>
 
+                            <!-- Redirect URL -->
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label">Activation</label>
+
+                                <div class="col-md-9">
+                                    <select name="activate" class="form-control" @keyup.enter="update" v-model="editForm.activate">
+                                        <option value="active">Activate</option>
+                                        <option value="inactive">Deactivate</option>
+                                    </select>
+
+                                    <span class="form-text text-muted">
+                                        Activate / Deactivate
+                                    </span>
+                                </div>
+                            </div>
                         </form>
                     </div>
 
@@ -226,7 +245,8 @@
                 editForm: {
                     errors: [],
                     name: '',
-                    email: ''
+                    email: '',
+                    activate: ''
                 }
             };
         },
@@ -271,13 +291,6 @@
                         });
             },
 
-            getHits() {
-                axios.get('/administrator/hits')
-                        .then(response => {
-                            this.hits = response.data;
-                        });
-            },
-
             /**
              * Show the form for creating new clients.
              */
@@ -302,6 +315,7 @@
                 this.editForm.id = user.id;
                 this.editForm.name = user.name;
                 this.editForm.email = user.email;
+                this.editForm.activate = user.activate;
 
                 $('#modal-edit-client').modal('show');
             },
@@ -311,7 +325,7 @@
              */
             update() {
                 this.persistClient(
-                    'put', '/oauth/clients/' + this.editForm.id,
+                    'put', '/administrator/users/update/' + this.editForm.id,
                     this.editForm, '#modal-edit-client'
                 );
             },
@@ -327,7 +341,8 @@
                         this.getClients();
 
                         form.name = '';
-                        form.redirect = '';
+                        form.email = '';
+                        form.activate = '';
                         form.errors = [];
 
                         $(modal).modal('hide');

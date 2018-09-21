@@ -17,10 +17,11 @@ Route::get('/download-doc', function () {
 
 })->name('download-doc');
 
+Route::put('/administrator/users/update/{id}', 'HomeController@update')->name('update');
+
 Route::get('/administrator/users', function () {
     return \App\User::where('type', '=','default')->get();
 });
-
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
