@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -31,6 +32,7 @@ class HomeController extends Controller
         $user->email = $request->email;
         $user->name = $request->name;
         $user->activate = $request->activate;
+        $user->edited_by = Auth::id();
         $user->save();
     }
 }

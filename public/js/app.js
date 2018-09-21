@@ -47953,16 +47953,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     /*
@@ -47983,7 +47973,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 errors: [],
                 name: '',
                 email: '',
-                activate: ''
+                activate: '',
+                edited_by: ''
             }
         };
     },
@@ -48058,6 +48049,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             this.editForm.name = user.name;
             this.editForm.email = user.email;
             this.editForm.activate = user.activate;
+            this.editForm.edited_by = user.edited_by;
 
             $('#modal-edit-client').modal('show');
         },
@@ -48085,6 +48077,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 form.name = '';
                 form.email = '';
                 form.activate = '';
+                form.edited_by = '';
                 form.errors = [];
 
                 $(modal).modal('hide');
@@ -48187,15 +48180,15 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
-                      _c("code", [_vm._v(_vm._s(user.created_at))])
+                      _c("a", { attrs: { href: "#" } }, [
+                        _c("code", [_vm._v(_vm._s(user.misses))])
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(user.hits) +
-                          "\n                        "
-                      )
+                      _c("a", { attrs: { href: "#" } }, [
+                        _c("code", [_vm._v(_vm._s(user.hits))])
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
@@ -48479,13 +48472,7 @@ var render = function() {
                           _vm.$set(_vm.editForm, "name", $event.target.value)
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }, [
-                      _vm._v(
-                        "\n                                    Something your users will recognize and trust.\n                                "
-                      )
-                    ])
+                    })
                   ])
                 ]),
                 _vm._v(" "),
@@ -48530,13 +48517,7 @@ var render = function() {
                           _vm.$set(_vm.editForm, "email", $event.target.value)
                         }
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }, [
-                      _vm._v(
-                        "\n                                    Email Address\n                                "
-                      )
-                    ])
+                    })
                   ])
                 ]),
                 _vm._v(" "),
@@ -48603,13 +48584,7 @@ var render = function() {
                           _vm._v("Deactivate")
                         ])
                       ]
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "form-text text-muted" }, [
-                      _vm._v(
-                        "\n                                    Activate / Deactivate\n                                "
-                      )
-                    ])
+                    )
                   ])
                 ])
               ])
@@ -48656,7 +48631,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Date / Time")]),
+        _c("th", [_vm._v("Misses")]),
         _vm._v(" "),
         _c("th", [_vm._v("Hits")]),
         _vm._v(" "),

@@ -30,7 +30,7 @@
                         <tr>
                             <th>Email</th>
                             <th>Name</th>
-                            <th>Date / Time</th>
+                            <th>Misses</th>
                             <th>Hits</th>
                             <th>Status</th>
                         </tr>
@@ -50,11 +50,11 @@
 
                             <!-- Secret -->
                             <td style="vertical-align: middle;">
-                                <code>{{ user.created_at }}</code>
+                                <a href="#"><code>{{ user.misses }}</code></a>
                             </td>
                             <!-- Delete Button -->
                             <td style="vertical-align: middle;">
-                                {{ user.hits }}
+                                <a href="#"><code>{{ user.hits }}</code></a>
                             </td>
                             <!-- Delete Button -->
                             <td style="vertical-align: middle;">
@@ -174,9 +174,6 @@
                                     <input id="edit-client-name" type="text" class="form-control"
                                                                 @keyup.enter="update" v-model="editForm.name">
 
-                                    <span class="form-text text-muted">
-                                        Something your users will recognize and trust.
-                                    </span>
                                 </div>
                             </div>
 
@@ -188,9 +185,6 @@
                                     <input type="text" class="form-control" name="email"
                                                     @keyup.enter="update" v-model="editForm.email">
 
-                                    <span class="form-text text-muted">
-                                        Email Address
-                                    </span>
                                 </div>
                             </div>
 
@@ -203,10 +197,6 @@
                                         <option value="active">Activate</option>
                                         <option value="inactive">Deactivate</option>
                                     </select>
-
-                                    <span class="form-text text-muted">
-                                        Activate / Deactivate
-                                    </span>
                                 </div>
                             </div>
                         </form>
@@ -246,7 +236,8 @@
                     errors: [],
                     name: '',
                     email: '',
-                    activate: ''
+                    activate: '',
+                    edited_by: ''
                 }
             };
         },
@@ -316,6 +307,7 @@
                 this.editForm.name = user.name;
                 this.editForm.email = user.email;
                 this.editForm.activate = user.activate;
+                this.editForm.edited_by = user.edited_by;
 
                 $('#modal-edit-client').modal('show');
             },
@@ -343,6 +335,7 @@
                         form.name = '';
                         form.email = '';
                         form.activate = '';
+                        form.edited_by = '';
                         form.errors = [];
 
                         $(modal).modal('hide');
