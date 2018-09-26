@@ -41,16 +41,16 @@ return [
 
         'oracle' => [
             'driver'         => 'oracle',
-            'host'           => env('ORACLE_HOST', '172.16.1.11'),
+            'host'           => env('ORACLE_HOST', '172.16.1.12'),
             'port'           => env('ORACLE_PORT', '1521'),
-            'database'       => env('ORACLE_DATABASE', 'sb2prod'),
+            'database'       => env('ORACLE_DATABASE', 'sub02'),
             'service_name' => env('SERVICE_NAME','sb2prod'),
             'username'       => env('ORACLE_USERNAME', 'sbreportmart'),
             'password'       => env('ORACLE_PASSWORD', 'sbreportmart'),
             'charset'        => env('ORACLE_CHARSET', 'AL32UTF8'),
             'prefix'         => env('ORACLE_PREFIX', ''),
             'prefix_schema'  => env('ORACLE_SCHEMA_PREFIX', ''),
-            'server_version' => env('ORACLE_SERVER_VERSION', '11g'),
+            'server_version' => env('ORACLE_SERVER_VERSION', '12c'),
         ],
 
         'mysql' => [

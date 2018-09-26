@@ -50,11 +50,11 @@
 
                             <!-- Secret -->
                             <td style="vertical-align: middle;">
-                                <a href="#"><code>{{ user.misses }}</code></a>
+                                <a v-bind:href="'/administrator/view/misses/'+user.id"> {{ user.misses }} </a>
                             </td>
                             <!-- Delete Button -->
                             <td style="vertical-align: middle;">
-                                <a href="#"><code>{{ user.hits }}</code></a>
+                                <a v-bind:href="'/administrator/view/hits/'+user.id"><code>{{ user.hits }}</code></a>
                             </td>
                             <!-- Delete Button -->
                             <td style="vertical-align: middle;">
@@ -236,8 +236,7 @@
                     errors: [],
                     name: '',
                     email: '',
-                    activate: '',
-                    edited_by: ''
+                    activate: ''
                 }
             };
         },
@@ -307,7 +306,6 @@
                 this.editForm.name = user.name;
                 this.editForm.email = user.email;
                 this.editForm.activate = user.activate;
-                this.editForm.edited_by = user.edited_by;
 
                 $('#modal-edit-client').modal('show');
             },
@@ -335,7 +333,6 @@
                         form.name = '';
                         form.email = '';
                         form.activate = '';
-                        form.edited_by = '';
                         form.errors = [];
 
                         $(modal).modal('hide');

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Input;
+
 Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
@@ -19,6 +21,14 @@ Route::get('/download-doc', function () {
 
 Route::put('/administrator/users/update/{id}', 'HomeController@update')->name('update');
 
+Route::get('/administrator/view/misses/{id}', 'HomeController@viewMisses')->name('misses');
+
+Route::get('/administrator/view/hits/{id}', 'HomeController@viewHits')->name('hits');
+
+Route::get('/administrator/misses/{id}', 'HomeController@listMisses');
+
+Route::get('/administrator/hits/{id}', 'HomeController@listHits');
+
 Route::get('/administrator/users', function () {
     return \App\User::where('type', '=','default')->get();
 });
@@ -31,9 +41,6 @@ Route::get('/admin', 'AdminController@admin')
     ->middleware('is_admin')    
     ->name('admin');
 
-Route::get('/admin', 'AdminController@admin')    
-    ->middleware('is_admin')    
-    ->name('admin');
 
 Route::get('/redirect', function () {
     $query = http_build_query([

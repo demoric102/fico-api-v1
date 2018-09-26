@@ -10,8 +10,17 @@ use App\Http\Controllers\Controller;
 
 class FicoController extends Controller
 {
+    private $connection;
+
+    public function __construct()
+    {
+        $this->connection = \DB::connection('oracle');
+   
+    }
+
     public function postBatchShow(Request $request)
     {
+        
         if (\App\User::where('email', $request->email)->exists()) {
             $user = \App\User::where('email', '=', $request->email)->first();
             if ($user->activate === "inactive"){
@@ -27,28 +36,28 @@ class FicoController extends Controller
                     $gender = $json['gender'];
                     
                     if ($bvn != ''){
-                        $score[] = \DB::connection('oracle')->select("select * from fico_score where MERGED_RUID = '$bvn'");
+                        $score[] = $this->connection->select("select * from fico_score where MERGED_RUID = '$bvn'");
                         $fico = new Fico;
                         $fico->email = $request->email;
                         $fico->fico_id = $request->email;
                         $fico->save();
                     }
                     elseif ($phone!=''){
-                        $score[] = \DB::connection('oracle')->select("select * from fico_score where MERGED_RUID = '$phone'");
+                        $score[] = $this->connection->select("select * from fico_score where MERGED_RUID = '$phone'");
                         $fico = new Fico;
                         $fico->email = $email;
                         $fico->fico_id = $email;
                         $fico->save();
                     }
                     elseif ($acc_num !=''){
-                        $score[] = \DB::connection('oracle')->select("select * from fico_score where MERGED_RUID = '$phone'");
+                        $score[] = $this->connection->select("select * from fico_score where MERGED_RUID = '$phone'");
                         $fico = new Fico;
                         $fico->email = $email;
                         $fico->fico_id = $email;
                         $fico->save();
                     }
                     elseif ($names != '' && $dob != '' && $gender != ''){
-                        $score[] = \DB::connection('oracle')->select("select * from fico_score where MERGED_RUID = '$phone'");
+                        $score[] = $this->connection->select("select * from fico_score where MERGED_RUID = '$phone'");
                         $fico = new Fico;
                         $fico->email = $email;
                         $fico->fico_id = $email;
@@ -76,7 +85,8 @@ class FicoController extends Controller
                     $gender = $json['gender'];
 
                     if ($bvn != ''){
-                        $data = \DB::connection('oracle')->select("select distinct a.customer_name,a.bvn,a.date_of_birth,a.gender,a.phone, a.structure_id, b.score, b.reasoncode1,b.reasoncode2,b.reasoncode3,b.reasoncode4, b.systemdate
+                        $this->connection->getDatabaseName();
+                        $data = $this->connection->select("select distinct a.customer_name,a.bvn,a.date_of_birth,a.gender,a.phone, a.structure_id, b.score, b.reasoncode1,b.reasoncode2,b.reasoncode3,b.reasoncode4, b.systemdate
                         from
                             (
                                 select distinct ruid, customer_name,bvn,date_of_birth,gender,phone,structure_id from aa_fico_score_dtls
@@ -108,7 +118,7 @@ class FicoController extends Controller
                         }
                     }
                     elseif ($phone!=''){
-                        $data = \DB::connection('oracle')->select("select distinct a.customer_name,a.bvn,a.date_of_birth,a.gender,a.phone, a.structure_id, b.score, b.reasoncode1,b.reasoncode2,b.reasoncode3,b.reasoncode4, b.systemdate
+                        $data = $this->connection->select("select distinct a.customer_name,a.bvn,a.date_of_birth,a.gender,a.phone, a.structure_id, b.score, b.reasoncode1,b.reasoncode2,b.reasoncode3,b.reasoncode4, b.systemdate
                         from
                             (
                                 select distinct ruid, customer_name,bvn,date_of_birth,gender,phone,structure_id from aa_fico_score_dtls
@@ -140,7 +150,7 @@ class FicoController extends Controller
                         }
                     }
                     elseif ($acc_num !=''){
-                        $data = \DB::connection('oracle')->select("select distinct a.customer_name,a.bvn,a.date_of_birth,a.gender,a.phone, a.structure_id, b.score, b.reasoncode1,b.reasoncode2,b.reasoncode3,b.reasoncode4, b.systemdate
+                        $data = $this->connection->select("select distinct a.customer_name,a.bvn,a.date_of_birth,a.gender,a.phone, a.structure_id, b.score, b.reasoncode1,b.reasoncode2,b.reasoncode3,b.reasoncode4, b.systemdate
                         from
                             (
                                 select distinct ruid, customer_name,bvn,date_of_birth,gender,phone,structure_id from aa_fico_score_dtls
@@ -172,7 +182,7 @@ class FicoController extends Controller
                         }
                     }
                     elseif ($names != '' && $dob != '' && $gender != ''){
-                        $data = \DB::connection('oracle')->select("select distinct a.customer_name,a.bvn,a.date_of_birth,a.gender,a.phone, a.structure_id, b.score, b.reasoncode1,b.reasoncode2,b.reasoncode3,b.reasoncode4, b.systemdate
+                        $data = $this->connection->select("select distinct a.customer_name,a.bvn,a.date_of_birth,a.gender,a.phone, a.structure_id, b.score, b.reasoncode1,b.reasoncode2,b.reasoncode3,b.reasoncode4, b.systemdate
                         from
                             (
                                 select distinct ruid, customer_name,bvn,date_of_birth,gender,phone,structure_id from aa_fico_score_dtls
