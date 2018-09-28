@@ -79,7 +79,6 @@
          */
         mounted() {
             this.prepareComponent();
-            console.log(this.id)
         },
 
         methods: {

@@ -6,7 +6,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header"><a href="{{url('home')}}" >Dashboard</a></div>
-
                 <div class="card-body">
                     @if (Auth::user()->type=='admin')
                         <misses-component :id= "{{ json_encode($id) }}"></misses-component>
@@ -22,4 +21,5 @@
         </div>
     </div>
 </div>
+
 @endsection

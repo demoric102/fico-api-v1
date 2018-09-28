@@ -20,6 +20,8 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "vue-datatable": "^1.0.4",
+        "vue-tmx": "^0.1.10",
         "vuejs-datatable": "^1.6.0",
         "vuejs-paginate": "^2.0.1"
     }
