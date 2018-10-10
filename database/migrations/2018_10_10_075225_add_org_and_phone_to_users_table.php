@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class EditHitsInUsersTable extends Migration
+class AddOrgAndPhoneToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class EditHitsInUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('hits')->default('0')->change();
+            $table->string('org_name');
+            $table->string('phone');
         });
     }
 

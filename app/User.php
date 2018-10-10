@@ -17,7 +17,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'hits', 'misses', 'edited_by'
+        'name', 'email', 'password', 'hits', 'misses', 'edited_by', 'org_name','phone'
     ];
 
     /**
@@ -34,5 +34,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdmin()    {        
         return $this->type === self::ADMIN_TYPE;    
+    }
+
+    public function ficos()
+    {
+        return $this->hasMany('App\Fico', 'email');
     }
 }

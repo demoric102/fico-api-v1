@@ -10,7 +10,7 @@
             <div class="card-header">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span>
-                       API Users
+                       API Users 
                     </span>
 
                     <a class="action-link" tabindex="-1" @click="showCreateClientForm">
@@ -54,7 +54,7 @@
                             </td>
                             <!-- Delete Button -->
                             <td style="vertical-align: middle;">
-                                <a v-bind:href="'/administrator/view/hits/'+user.id"><code>{{ user.hits }}</code></a>
+                                <a v-bind:href="'/administrator/view/hits/'+user.id">{{ user.hits }}</a>
                             </td>
                             <!-- Delete Button -->
                             <td style="vertical-align: middle;">

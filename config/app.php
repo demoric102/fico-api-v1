@@ -160,6 +160,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Yajra\Oci8\Oci8ServiceProvider::class,
+        yajra\Datatables\DatatablesServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -209,7 +211,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        //'Datatables' => yajra\Datatables\Datatables::class,
+        'Datatables' => Yajra\Datatables\Datatables::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
     ],
 
 ];

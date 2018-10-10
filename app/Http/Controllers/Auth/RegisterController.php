@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+ini_set('max_execution_time', 300);
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Mail\SendDoc;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -50,6 +52,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'org_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -63,9 +67,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        Mail::to($data['email'])->queue(new SendDoc());
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'org_name' => $data['org_name'],
+            'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
             'type' => User::DEFAULT_TYPE,   
         ]);

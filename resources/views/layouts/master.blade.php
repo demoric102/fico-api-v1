@@ -1,30 +1,24 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CRC FICO API</title>
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'CRC Credit Bureau') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
+        <!-- Bootstrap CSS -->
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <style>
+            body {
+                font-size: 1.5rem;
+            }
+        </style>
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('/images/crc_logo.png') }}" alt="CRC Credit Bureau">
                 </a>
@@ -71,11 +65,17 @@
                 </div>
             </div>
         </nav>
-
-        <main class="py-4">
+        <div class="container">
             @yield('content')
-        </main>
-    </div>
-    
-</body>
+        </div>
+
+        <!-- jQuery -->
+        <script src="//code.jquery.com/jquery.js"></script>
+        <!-- DataTables -->
+        <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <!-- App scripts -->
+        @stack('scripts')
+    </body>
 </html>

@@ -24,6 +24,7 @@ class FicoController extends Controller
         if (\App\User::where('email', $request->email)->exists()) {
             $user = \App\User::where('email', '=', $request->email)->first();
             if ($user->activate === "inactive"){
+                return response()->json(array("errMsg"=>"User Inactive. Please contact the customer service"), 200);
                 $path = storage_path() . "/data.json";
                 $json_data = json_decode(file_get_contents($path), true); 
                 $score = array();

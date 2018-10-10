@@ -8,7 +8,7 @@
                 <div class="card-header">Dashboard</div>
 
                 <div class="card-body">
-                    @if (Auth::user()->type=='admin')
+                    @if (Auth::user()->type=='admin' || Auth::user()->type=='super-admin')
                         <admin-component></admin-component>
                     @elseif (Auth::user()->type=='default')
                         <passport-clients></passport-clients>
