@@ -29,6 +29,9 @@ class UsersExport implements FromCollection, WithHeadings
             'Access Level',
             'Hits',
             'Miss',
+            'Action By',
+            'Company Name',
+            'Phone',
         ];
     }
 }

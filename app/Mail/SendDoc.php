@@ -28,7 +28,7 @@ class SendDoc extends Mailable
      */
     public function build()
     {
-        return $this->from('info@crccreditbureau.com')->view('send-doc')->attach('documentation/fico-api-documentation.pdf', [
+        return $this->from('monitor@crccreditbureau.com')->view('auth.send-doc')->attach('documentation/fico-api-documentation.pdf', [
             'as' => 'fico-api-documentation.pdf',
             'mime' => 'application/pdf',
         ]);;

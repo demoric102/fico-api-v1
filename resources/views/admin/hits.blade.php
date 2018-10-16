@@ -8,7 +8,7 @@
                 <div class="card-header"><a href="{{url('home')}}" >Dashboard</a></div>
 
                 <div class="card-body">
-                    @if (Auth::user()->type=='admin')
+                    @if (Auth::user()->type=='admin' || Auth::user()->type=='super-admin')
                         <hits-component :id= "{{ json_encode($id) }}"></hits-component>
                     @elseif (Auth::user()->type=='default')
                         <hits-component></hits-component>

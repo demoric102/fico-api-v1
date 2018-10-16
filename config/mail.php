@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'verify@crccreditbureau.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'monitor@crccreditbureau.com'),
         'name' => env('MAIL_FROM_NAME', 'CRC Credit Bureau'),
     ],
 
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => 'demoric102@gmail.com',
+    'username' => 'monitor@crccreditbureau.com',
 
-    'password' => 'opengmail',
+    'password' => '*4g6KXjd',
 
     /*
     |--------------------------------------------------------------------------

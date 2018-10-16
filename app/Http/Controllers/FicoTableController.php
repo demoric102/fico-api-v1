@@ -13,12 +13,11 @@ use Yajra\DataTables\Facades\DataTables;
 class FicoTableController extends Controller
 {
     
-    public function show($id)
+    public function index()
     {
-        
-        $user = User::where('id','=','$id')->get();
-        $hits = Fico::where('email','=','$user->email')->where('status','=','hit')->get();
-        $misses = Fico::where('email','=','$user->email')->where('status','=','miss')->get();
+        $user = User::where('id','=', 19)->firstOrFail();
+        $hits = Fico::where('email','=', $user->email)->where('status','=','hit')->get();
+        $misses = Fico::where('email','=', $user->email)->where('status','=','miss')->get();
         $addition = $hits->count() + $misses->count();
         return view('datatables.view-org')->with('user', $user)->with('hits', $hits)->with('misses', $misses)->with('addition', $addition);
     }

@@ -4,6 +4,7 @@ use App\DataTables\UsersDataTable;
 use Illuminate\Support\Facades\Input;
 use Yajra\Datatables\Datatables;
 use App\User;
+use App\Fico;
 
 Auth::routes(['verify' => true]);
 
@@ -56,6 +57,8 @@ Route::resource('/view-org', 'FicoTableController', [
 
 Route::get('/download-report', 'DatatablesController@export')->name('dld');
 
+Route::get('/download-report/org', 'DatatablesController@export')->name('dld-org');
+
 Route::get('admin-data', function (UsersDataTable $dataTable)
 {
     return $dataTable->render('datatables.index');
@@ -64,20 +67,16 @@ Route::get('admin-data', function (UsersDataTable $dataTable)
 Route::get('/datatables-data', function () {
     return Datatables::of(User::where('type', '=','default'))
     ->addColumn('action', function ($users) {
-        return '<a href="view-org/'.$users->id.'" class="btn btn-primary"> View</a>';
+        return '<a href="/view-org" class="btn btn-primary"> View</a>';
     })
     ->make(true);
 })->name('datatables-data');
 
-Route::get('view-org/{id}', function () {
-    return $id;
-    $user = User::where('id','=','$id')->get();
-    return Datatables::of(Fico::where('email', '=','$user->email'))
-    ->addColumn('action', function ($users) {
-        return '<a href="view-org/'.$users->id.'" class="btn btn-primary"> View</a>';
-    })
+Route::get('view-org/19/data', function () {
+    $user = User::where('id','=','19')->firstOrFail();
+    return Datatables::of(Fico::where('email', '=', $user->email)->get())
     ->make(true);
-})->name('view-org/{id}');
+})->name('view-org/19/data');
 
 Route::get('/redirect', function () {
     $query = http_build_query([

@@ -6,9 +6,9 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    Total Misses ({!! $misses->count() !!})
-                    &nbsp;&nbsp;&nbsp;
-                    >>
+                    <strong>Organization Name ({!! $user->org_name !!})</strong>
+                    <br />
+                    <br />
                     &nbsp;&nbsp;&nbsp;
                     Total Hits ({!! $hits->count() !!})
                     &nbsp;&nbsp;&nbsp;
@@ -18,21 +18,19 @@
                     &nbsp;&nbsp;&nbsp;
                     >>
                     &nbsp;&nbsp;&nbsp;
-                    Hits Percentage 
+                    Hits Percentage ({!! round($hits->count()/$addition*100) !!}%)
 
-                    <a href="{{route('dld')}}" class="pull-right">Download Entire Sheet</a>
+                    <a href="{{route('dld-org')}}" class="pull-right">Download Entire Sheet</a>
                 </div>
     
                 <div class="card-body">
                     <table class="table" id="org-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Search Parameter</th>
                                 <th>Email</th>
-                                <th>Misses</th>
-                                <th>Hits</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th>Date & Time</th>
                             </tr>
                         </thead>
                     </table>
@@ -47,5 +45,18 @@
 
 @push('scripts')
 <script>
+$(function() {
+    $('#org-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{!! route('view-org/19/data') !!}',
+        columns: [
+            { data: 'fico_id', name: 'fico_id' },
+            { data: 'email', name: 'email' },
+            { data: 'status', name: 'status' },
+            { data: 'created_at', name: 'created_at' }
+        ]
+    });
+});
 </script>
 @endpush

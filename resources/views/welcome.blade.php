@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{ route('register') }}" download>PHP Documentation</a>
+                    <a href="{{ route('register') }}">PHP Documentation</a>
                     <a href="{{ route('register') }}">Java Documentation</a>
                     <a href="{{ route('register') }}">C# Documentation</a>
                 </div>

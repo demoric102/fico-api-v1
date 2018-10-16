@@ -95,7 +95,10 @@ class FicoController extends Controller
                             ) a
                         inner join 
                             (
-                                select merged_ruid, score, reasoncode1,reasoncode2,reasoncode3,reasoncode4, systemdate from fico_score
+                                select merged_ruid, score, 
+                        code_reason(reasoncode1) reasoncode1,code_reason(reasoncode2) reasoncode2,
+                        code_reason(reasoncode3) reasoncode3,code_reason(reasoncode4) reasoncode4, 
+                        systemdate from fico_score
                             )b
                         on a.ruid = b.merged_ruid
                         order by b.systemdate desc");
@@ -127,7 +130,10 @@ class FicoController extends Controller
                             ) a
                         inner join 
                             (
-                                select merged_ruid, score, reasoncode1,reasoncode2,reasoncode3,reasoncode4, systemdate from fico_score
+                                select merged_ruid, score, 
+                        code_reason(reasoncode1) reasoncode1,code_reason(reasoncode2) reasoncode2,
+                        code_reason(reasoncode3) reasoncode3,code_reason(reasoncode4) reasoncode4, 
+                        systemdate from fico_score
                             )b
                         on a.ruid = b.merged_ruid
                         order by b.systemdate desc");
@@ -159,7 +165,10 @@ class FicoController extends Controller
                             ) a
                         inner join 
                             (
-                                select merged_ruid, score, reasoncode1,reasoncode2,reasoncode3,reasoncode4, systemdate from fico_score
+                                select merged_ruid, score, 
+                        code_reason(reasoncode1) reasoncode1,code_reason(reasoncode2) reasoncode2,
+                        code_reason(reasoncode3) reasoncode3,code_reason(reasoncode4) reasoncode4, 
+                        systemdate from fico_score
                             )b
                         on a.ruid = b.merged_ruid
                         order by b.systemdate desc");
@@ -183,18 +192,31 @@ class FicoController extends Controller
                         }
                     }
                     elseif ($names != '' && $dob != '' && $gender != ''){
-                        $data = $this->connection->select("select distinct a.customer_name,a.bvn,a.date_of_birth,a.gender,a.phone, a.structure_id, b.score, b.reasoncode1,b.reasoncode2,b.reasoncode3,b.reasoncode4, b.systemdate
+                        $name = explode(" ", $names);
+                        if (count($name) == 3){
+                            $name_clause = " UPPER(customer_name) LIKE upper('%$name[0]%') and UPPER(customer_name) LIKE upper('%$name[1]%') and UPPER(customer_name) LIKE upper('%$name[2]%') ";
+                        }
+                        elseif (count($name) == 2){
+                            $name_clause = " UPPER(customer_name) LIKE upper('%$name[0]%') and UPPER(customer_name) LIKE upper('%$name[1]%') ";
+                        }
+                        $name_query = "select  a.customer_name,a.bvn,a.date_of_birth,a.gender,a.phone, a.structure_id, 
+                        b.score, b.reasoncode1,b.reasoncode2,b.reasoncode3,b.reasoncode4, b.systemdate
                         from
-                            (
-                                select distinct ruid, customer_name,bvn,date_of_birth,gender,phone,structure_id from aa_fico_score_dtls
-                                where customer_name = '$names' && date_of_birth = '$dob' && gender = '$gender'
-                            ) a
-                        inner join 
-                            (
-                                select merged_ruid, score, reasoncode1,reasoncode2,reasoncode3,reasoncode4, systemdate from fico_score
-                            )b
-                        on a.ruid = b.merged_ruid
-                        order by b.systemdate desc");
+                        (
+                        select ruid, customer_name,bvn,date_of_birth,gender,phone,structure_id from aa_fico_score_dtls
+                        where  " . $name_clause . "
+                        and date_of_birth =  to_date('$dob', 'dd-MON-yyyy')
+                        and gender = '$gender'
+                        ) A,
+                        (
+                        select merged_ruid, score, 
+                        code_reason(reasoncode1) reasoncode1,code_reason(reasoncode2) reasoncode2,
+                        code_reason(reasoncode3) reasoncode3,code_reason(reasoncode4) reasoncode4, 
+                        systemdate from fico_score
+                        )b
+                        WHERE A.RUID = B.MERGED_RUID";
+                        $data = $this->connection->select($name_query);
+
                         if (empty($data)){
                             $dataArray[] = array("errMsg"=>"This result returned null");
                             \DB::table('users')->where('email', $request->email)->increment('misses');
