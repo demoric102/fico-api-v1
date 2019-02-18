@@ -26,6 +26,12 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function test()
+    {
+        return 'home controller test';
+    }
+
     public function update(Request $request)
     {
         $user = \App\User::where('id', '=', $request->id)->firstOrFail();

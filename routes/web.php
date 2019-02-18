@@ -23,6 +23,8 @@ Route::get('/download-doc', function () {
 
 })->name('download-doc');
 
+Route::post('test', 'HomeController@test');
+
 Route::put('/administrator/users/update/{id}', 'HomeController@update')->name('update');
 
 Route::get('/administrator/view/misses/{id}', 'HomeController@viewMisses')->name('misses');
